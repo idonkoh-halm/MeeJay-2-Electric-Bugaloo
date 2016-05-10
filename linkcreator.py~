@@ -1,0 +1,17 @@
+class Text_Output:
+    '''
+    from a bunch of user defined links, this will attempt to take those links
+    and add them line by line to create a m3u file.
+    '''
+    def ___init___(self,filename):
+        self.f = file(filename,'w')
+    def new_text (self, txt):
+        self.f.write(txt+'\n') #creates a new line
+    def finish(self):
+        self.f.close()
+
+def m3u_generator(links, filename='playlist.m3u'):
+    links=raw_input('Add a song url!')
+    text_output=Text_Output(filename)
+    text_output.new_text()
+
