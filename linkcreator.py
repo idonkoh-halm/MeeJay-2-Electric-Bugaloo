@@ -1,7 +1,8 @@
 import sys
 import urllib2
 import random
-
+import glob
+from os.path import expanduser as host_music_library
 class Text_Output:
     '''
     from a bunch of user defined links, this will attempt to take those links
@@ -27,7 +28,7 @@ def generate_m3u(playlist_name,songs):
 
     print "Name of the file: ", pla.name
     for song in songs:
-        pla.write(str(make_html(song,"/Users/programmer/Documents/MeeJay-2--Electric-Bugaloo/Meejay Music Directory/")))
+        pla.write(str(make_html(song,host_music_library("~/Music/Meejay Music Directory/"))))
         #pla.write(str(make_html(song,"/Users/programmer/Documents/Meejay/Music Directory/%s/"%m3u_name)))
         pla.write('\n')
     pla.close()
@@ -38,7 +39,8 @@ def make_html (song_path, directory): #="http://googledrive.com/host/0B_QRZ8n8sC
     argument "song_path" is wrapped around the root directory in order to create a proper path name.
     Example: takes word "tank", and changes it to "http://googledrive.com/host/0B_QRZ8n8sCFLdkJTMU1Ed0k3VVk/music/tank"
     '''
-    newlink=directory+urllib2.quote(song_path)+".mp3"
+
+    newlink=directory+song_path#+urllib2.quote(song_path)#+".mp3"
     return newlink
     text_output=Text_Output()
     text_output.new_text(newlink)
@@ -66,19 +68,19 @@ song_data ={
             '%sPearl Jam - Life Wasted'%'Rock/','%sThe Fratellis - Whistle for the Choir'%'Rock/'],
     'Rap' : ['%s01 Ultralight Beam'%'Rap/','%sLupe Fiasco - SNDCLSH in Vegas'%'Rap/',
              '''%sLupe Fiasco - WWJD He'd Prolly LOL Like WTF!!!'''%'Rap/''','%sRJD2 - Ghostwriter'%'Rap/'],
-    'Jazz' : ['%sVince Guaraldi Trio - Pebble Beach'%'Jazz/','%sVince Guaraldi Trio - Christmas Time Is Here (instrumental)'%'Jazz/',
-              '%sThe Seatbelts - COSMOS'%'Jazz/','%sThe Seatbelts - TOO GOOD TOO BAD'%'Jazz/','%sThe Seatbelts - Tank!'%'Jazz/','%sMiles Davis _ John Coltrane - Blue in Green'%'Jazz/',
-            '%sRed Garland - Almost Like Being in Love'%'Jazz/', '%sSonny Rollins - God Bless the Child'%'Jazz/',
-            '%sThe Seatbelts - CAT BLUES'%'Jazz/', '%sThe Seatbelts - The EGG and I'%'Jazz/',
-            '%sVince Guaraldi - Oh, Good Grief!'%'Jazz/', '%sVince Guaraldi - Skating'%'Jazz/',
-            '%sVince Guaraldi Trio - Baseball Theme'%'Jazz/', '%sVince Guaraldi Trio - Blue Charlie Brown'%'Jazz/',
-            '%sVince Guaraldi Trio - Great Pumpkin Waltz'%'Jazz/', '%sVince Guaraldi Trio - O Nosso Amor.mp3,'%'Jazz/',],
+    'Jazz' : [#'%sVince Guaraldi Trio - Pebble Beach'%'Jazz/','%sVince Guaraldi Trio - Christmas Time Is Here (instrumental)'%'Jazz/',
+    #          '%sThe Seatbelts - COSMOS'%'Jazz/','%sThe Seatbelts - TOO GOOD TOO BAD'%'Jazz/','%sThe Seatbelts - Tank!'%'Jazz/','%sMiles Davis _ John Coltrane - Blue in Green'%'Jazz/',
+    #        '%sRed Garland - Almost Like Being in Love'%'Jazz/', '%sSonny Rollins - God Bless the Child'%'Jazz/',
+    #        '%sThe Seatbelts - CAT BLUES'%'Jazz/', '%sThe Seatbelts - The EGG and I'%'Jazz/',
+    #        '%sVince Guaraldi - Oh, Good Grief!'%'Jazz/', '%sVince Guaraldi - Skating'%'Jazz/',
+    #        '%sVince Guaraldi Trio - Baseball Theme'%'Jazz/', '%sVince Guaraldi Trio - Blue Charlie Brown'%'Jazz/',
+            '%sVince Guaraldi Trio - Great Pumpkin Waltz.mp3'%'Jazz/', '%sVince Guaraldi Trio - O Nosso Amor.mp3'%'Jazz/',],
     'vg_ost':['%s01-hideki-naganuma-let-mom-sleep'%'vg_ost/',  '%s02-hideki-naganuma-humming-the-bassline'%'vg_ost/' ,
               '%s05-hideki-naganuma-sneakman'%'vg_ost/', '%s08-let-mom-sleep-no-sleep-mix-'%'vg_ost/',
               '%s09-hideki-naganuma-rock-it'%'vg_ost/','%s14-teknopathetic.mp3'%'vg_ost/'],
     'pcast_edu':[],
     'pcast_sports':[],
-    'pcast_comedy':['%sHARMONTOWN 193'%'pcast_comedy/','%sMAGIC TABERN 001'%'pcast_comedy/','%sWAIT WAIT - 002'%'pcast_comedy/'],
+    'pcast_comedy':glob.glob(host_music_library("/Music/Meejay Music Directory/pcast_comedy/*.mp3")),
     'pcast_vidja':['%sTOVG - 087'%'pcast_vidja/','%sCO-OPTIONAL-121'%'pcast_vidja/']
 
 
@@ -108,4 +110,3 @@ if __name__ == '__main__':
     #texttohtml("touch and go")
     #get_url_from_user()
     #m3u_generator('playlist.txt')
-print 'hey look at me! I exist in github now!'
